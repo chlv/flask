@@ -1,5 +1,11 @@
 #  -*- coding:utf-8 -*-
 import flask
-app = flask.Flask(__name__)
+from flask.ext.sqlalchemy import SQLAlchemy
 
-from app import views
+app = flask.Flask(__name__)
+app.config.from_object("config")
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tmp/test.db'
+db = SQLAlchemy(app)
+
+
+from app import views,models
