@@ -1,6 +1,8 @@
 # --coding:utf-8 --
 from app import app
-from flask import render_template,request
+from flask import render_template,request,url_for,redirect
+from werkzeug.utils import secure_filename
+from os import path
 
 @app.route("/")
 @app.route("/index")
@@ -32,4 +34,14 @@ def login():
 		return render_template("login.html",method=request.method)
 	else:
 		return render_template("login.html",method=request.method)
+
+@app.route("/upload",methods=["POST","GET"])
+def upload():
+	if request.method == "POST":
+		f = request.files["file"]
+		basefile = path.abspath(path.dirname(__file__))
+		uploadpath = path.join(basefile,"static/upload")
+		f.save(uploadpath,secure_filename(f.filename))
+		return redirect(url_for("upload"))
+	return render_template("upload.html")
 
