@@ -40,8 +40,8 @@ def upload():
 	if request.method == "POST":
 		f = request.files["file"]
 		basefile = path.abspath(path.dirname(__file__))
-		uploadpath = path.join(basefile,"static/upload")
-		f.save(uploadpath,secure_filename(f.filename))
+		uploadpath = path.join(basefile,"static","upload",secure_filename(f.filename))
+		f.save(uploadpath)
 		return redirect(url_for("upload"))
 	return render_template("upload.html")
 
